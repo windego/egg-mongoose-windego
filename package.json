@@ -1,6 +1,6 @@
 {
   "name": "egg-mongoose-windego",
-  "version": "1.0.0",
+  "version": "1.0.16",
   "version-1": "3.3.1",
   "description": "egg mongoose plugin",
   "eggPlugin": {
@@ -35,6 +35,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "lp": "yalc publish",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",

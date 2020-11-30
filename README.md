@@ -1,4 +1,5 @@
 # egg-mongoose
+
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][codecov-image]][codecov-url]
@@ -24,17 +25,17 @@ Egg's mongoose plugin.
 ## Install
 
 ```bash
-$ npm i egg-mongoose --save
+npm i egg-mongoose --save
 ```
 
 ## Configuration
 
-Change `{app_root}/config/plugin.js` to enable `egg-mongoose` plugin:
+Change `{app_root}/config/plugin.js` to enable `egg-mongoose-windego` plugin:
 
 ```js
 exports.mongoose = {
   enable: true,
-  package: 'egg-mongoose',
+  package: "egg-mongoose-windego",
 };
 ```
 
@@ -45,7 +46,7 @@ exports.mongoose = {
 ```js
 // {app_root}/config/config.default.js
 exports.mongoose = {
-  url: 'mongodb://127.0.0.1/example',
+  url: "mongodb://127.0.0.1/example",
   options: {},
   // mongoose global plugins, expected a function or an array of function and options
   plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
@@ -53,7 +54,7 @@ exports.mongoose = {
 // recommended
 exports.mongoose = {
   client: {
-    url: 'mongodb://127.0.0.1/example',
+    url: "mongodb://127.0.0.1/example",
     options: {},
     // mongoose global plugins, expected a function or an array of function and options
     plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
@@ -65,22 +66,22 @@ exports.mongoose = {
 
 ```js
 // {app_root}/app/model/user.js
-module.exports = app => {
+module.exports = (app) => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
 
   const UserSchema = new Schema({
-    userName: { type: String  },
-    password: { type: String  },
+    userName: { type: String },
+    password: { type: String },
   });
 
-  return mongoose.model('User', UserSchema);
-}
+  return mongoose.model("User", UserSchema);
+};
 
 // {app_root}/app/controller/user.js
 exports.index = function* (ctx) {
   ctx.body = yield ctx.model.User.find({});
-}
+};
 ```
 
 ## Multiple connections
@@ -93,18 +94,18 @@ exports.mongoose = {
   clients: {
     // clientId, access the client instance by app.mongooseDB.get('clientId')
     db1: {
-      url: 'mongodb://127.0.0.1/example1',
+      url: "mongodb://127.0.0.1/example1",
       options: {},
       // client scope plugin array
-      plugins: []
+      plugins: [],
     },
     db2: {
-      url: 'mongodb://127.0.0.1/example2',
+      url: "mongodb://127.0.0.1/example2",
       options: {},
     },
   },
   // public scope plugin array
-  plugins: []
+  plugins: [],
 };
 ```
 
@@ -112,41 +113,41 @@ exports.mongoose = {
 
 ```js
 // {app_root}/app/model/user.js
-module.exports = app => {
+module.exports = (app) => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
-  const conn = app.mongooseDB.get('db1'); 
+  const conn = app.mongooseDB.get("db1");
 
   const UserSchema = new Schema({
     userName: { type: String },
     password: { type: String },
   });
 
-  return conn.model('User', UserSchema);
-}
+  return conn.model("User", UserSchema);
+};
 
 // {app_root}/app/model/book.js
-module.exports = app => {
+module.exports = (app) => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
-  const conn = app.mongooseDB.get('db2');
+  const conn = app.mongooseDB.get("db2");
 
   const BookSchema = new Schema({
     name: { type: String },
   });
 
-  return conn.model('Book', BookSchema);
-}
+  return conn.model("Book", BookSchema);
+};
 
 // app/controller/user.js
 exports.index = function* (ctx) {
   ctx.body = yield ctx.model.User.find({}); // get data from db1
-}
+};
 
 // app/controller/book.js
 exports.index = function* (ctx) {
   ctx.body = yield ctx.model.Book.find({}); // get data from db2
-}
+};
 ```
 
 ### Default config
@@ -159,7 +160,7 @@ see [config/config.default.js](config/config.default.js) for more detail.
 // {app_root}/config/config.default.js
 exports.mongoose = {
   client: {
-    url: 'mongodb://mongosA:27501,mongosB:27501',
+    url: "mongodb://mongosA:27501,mongosB:27501",
     options: {
       mongos: true,
     },
